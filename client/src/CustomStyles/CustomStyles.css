@@ -1,0 +1,49 @@
+.BadLuckCard {
+    width: 235px;
+    height: 320px;
+    border: 1px solid black;
+}
+
+.BadLuckCard .card-img-top {
+    height: 150px;
+    object-fit: contain;
+}
+
+.PickCardButton {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 2px solid #007bff;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.PickCardButton:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.1);
+}
+
+.PickCardButton:disabled {
+    border-color: #6c757d;
+    color: #6c757d;
+    transform: none;
+}
+
+.PickCardButton:disabled:hover {
+    background-color: transparent;
+    color: #6c757d;
+}
+
+.BadLuckCard .card-text {
+  font-size: 0.95rem;
+}
+
+.BadLuckCard .card-title {
+  font-size: 1.4rem;
+}

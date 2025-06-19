@@ -1,17 +1,19 @@
 .BadLuckCard {
-    width: 235px;
-    height: 320px;
+    width: min(235px, 90vw);
+    height: auto;
+    min-height: 20rem;
     border: 1px solid black;
+    aspect-ratio: 235/320;
 }
 
 .BadLuckCard .card-img-top {
-    height: 150px;
+    height: 9.375rem;
     object-fit: contain;
 }
 
 .PickCardButton {
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -41,9 +43,52 @@
 }
 
 .BadLuckCard .card-text {
-  font-size: 0.95rem;
+    font-size: 0.95rem;
 }
 
 .BadLuckCard .card-title {
-  font-size: 1.4rem;
+    font-size: 1.4rem;
+}
+
+/* Add responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .BadLuckCard {
+        width: min(200px, 85vw);
+        min-height: 17rem;
+    }
+    
+    .BadLuckCard .card-img-top {
+        height: 8rem;
+    }
+    
+    .PickCardButton {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .BadLuckCard {
+        width: min(180px, 80vw);
+        min-height: 15rem;
+    }
+    
+    .BadLuckCard .card-img-top {
+        height: 7rem;
+    }
+    
+    .BadLuckCard .card-text {
+        font-size: 0.85rem;
+    }
+    
+    .BadLuckCard .card-title {
+        font-size: 1.2rem;
+    }
+    
+    .PickCardButton {
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 0.8rem;
+    }
 }

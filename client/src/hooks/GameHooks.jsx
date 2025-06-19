@@ -2,10 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { getRandomCards, startGameSession, cancelGameSession } from '../API/API.js';
 
 const INITIAL_CARDS = 3;
+const TIMER_DURATION = 30;
 
 // Hook to manage game state
 export const useGameState = (gameKey = 0) => {
-  const [playerCards, setPlayerCards] = useState([]);
+  const [playerCards, setPlayerCards] = useState([]);   // cards in player's hand
+  const [seenCardIds, setSeenCardIds] = useState([]);   // IDs of all cards involved in the game
   const [initialized, setInitialized] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
   const [playerLoading, setPlayerLoading] = useState(true);
@@ -15,6 +17,7 @@ export const useGameState = (gameKey = 0) => {
   useEffect(() => {
     if (gameKey > 0) {
       setPlayerCards([]);
+      setSeenCardIds([]);
       setInitialized(false);
       setGameEnded(false);
       setPlayerLoading(true);
@@ -30,6 +33,7 @@ export const useGameState = (gameKey = 0) => {
     getRandomCards(INITIAL_CARDS)
       .then(cards => {
         setPlayerCards(cards);
+        setSeenCardIds(cards.map(card => card.cardId)); // Track initial cards
         setInitialized(true);
         setPlayerLoading(false);
       })
@@ -42,6 +46,8 @@ export const useGameState = (gameKey = 0) => {
   return {
     playerCards,
     setPlayerCards,
+    seenCardIds, // Export this
+    setSeenCardIds, // Export this
     initialized,
     gameEnded,
     setGameEnded,
@@ -140,8 +146,8 @@ export const useGameSession = () => {
 };
 
 // Hook to manage game timer
-export const useGameTimer = (newCard, showModal, gameEnded, isLoadingNewCard, handleTimeout, timerDuration = 15) => {
-  const [timer, setTimer] = useState(timerDuration);
+export const useGameTimer = (newCard, showModal, gameEnded, isLoadingNewCard, handleTimeout) => {
+  const [timer, setTimer] = useState(TIMER_DURATION);
   const timeoutHandled = useRef(false);
 
   // Start/reset timer only when modal is closed and a new card is present
@@ -153,7 +159,7 @@ export const useGameTimer = (newCard, showModal, gameEnded, isLoadingNewCard, ha
       return;
     }
 
-    setTimer(timerDuration); // Reset timer at the start of a round
+    setTimer(TIMER_DURATION); // Reset timer at the start of a round
 
     const interval = setInterval(() => {
       setTimer((prev) => {
@@ -170,7 +176,7 @@ export const useGameTimer = (newCard, showModal, gameEnded, isLoadingNewCard, ha
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [newCard, showModal, gameEnded, handleTimeout, isLoadingNewCard, timerDuration]);
+  }, [newCard, showModal, gameEnded, handleTimeout, isLoadingNewCard]);
 
   return timer;
 };

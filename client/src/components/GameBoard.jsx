@@ -1,7 +1,6 @@
 import BadLuckCard from "./BadLuckCard";
 import { Button } from "react-bootstrap";
 import HomeButton from "./HomeButton.jsx";
-import { Link } from "react-router";
 import { useGameTimer } from "../hooks/GameHooks.jsx";
 
 /**

@@ -29,6 +29,8 @@ function GamePage(props) {
   const {
     playerCards,
     setPlayerCards,
+    seenCardIds,
+    setSeenCardIds,
     initialized,
     gameEnded,
     setGameEnded,
@@ -61,7 +63,9 @@ function GamePage(props) {
     initialized,
     setNewCard,
     setNewCardLoading,
-    setNewCardError
+    setNewCardError,
+    seenCardIds,
+    setSeenCardIds
   });
 
   // Handler to start a new game

@@ -232,24 +232,28 @@ export const createFetchNewCardHandler = ({
   initialized,
   setNewCard,
   setNewCardLoading,
-  setNewCardError
+  setNewCardError,
+  seenCardIds,
+  setSeenCardIds
 }) => {
   return () => {
     // Don't fetch if game is over, not initialized, or no player cards exist
     if (gameEnded || !initialized || playerCards.length === 0) return;
     
     // Create array of card IDs to exclude (player shouldn't get duplicate cards)
-    const currentExcludeIds = playerCards.map(card => card.cardId);
+    const currentExcludeIds = seenCardIds;
     
     // Set loading state and clear any previous errors
     setNewCardLoading(true);
     setNewCardError(null);
     
-    // Fetch new card from server, excluding current player cards
+    // Fetch new card from server, excluding all cards seen in this game
     getRandomCard(currentExcludeIds)
       .then(card => {
         // Successfully got new card
         setNewCard(card);
+        // Track this new card as seen immediately when fetched
+        setSeenCardIds(prev => [...prev, card.cardId]);
         setNewCardLoading(false);
       })
       .catch(err => {
